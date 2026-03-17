@@ -12,8 +12,6 @@ const items: string[] = [
   "Grace",
 ];
 
-const SPIN_SPEED = 0.8; // degrees per frame (~48 deg/s at 60fps)
-
 const COLORS = [
   "#e63946",
   "#f4a261",
@@ -27,24 +25,57 @@ const COLORS = [
   "#ef476f",
 ];
 
-// --- Canvas setup ------------------------------------------------------------
+// Initial speed in radians/frame and the friction factor applied each frame.
+const INITIAL_SPEED = 0.35;
+const FRICTION = 0.987;
+// Speed below which we consider the wheel stopped.
+const STOP_THRESHOLD = 0.0005;
+
+// --- Canvas & button setup ---------------------------------------------------
 
 const canvas = document.querySelector<HTMLCanvasElement>("#wheel")!;
 const ctx = canvas.getContext("2d")!;
+const hubBtn = document.querySelector<HTMLButtonElement>("#hub-btn")!;
+const spinBtn = document.querySelector<HTMLButtonElement>("#spin-btn")!;
 
 function resizeCanvas(): void {
   const size = Math.min(window.innerWidth, window.innerHeight) * 0.85;
   canvas.width = size;
   canvas.height = size;
+  syncHubButton(size);
+}
+
+function syncHubButton(size: number): void {
+  const hubSize = size * 0.1;
+  hubBtn.style.width = `${hubSize}px`;
+  hubBtn.style.height = `${hubSize}px`;
 }
 
 resizeCanvas();
-
 new ResizeObserver(resizeCanvas).observe(document.body);
 
-// --- Drawing -----------------------------------------------------------------
+// --- Spin state --------------------------------------------------------------
 
-let rotation = 0; // current rotation offset in radians
+let rotation = 0;
+let velocity = 0; // radians per frame
+let spinning = false;
+
+function setButtonsDisabled(disabled: boolean): void {
+  hubBtn.disabled = disabled;
+  spinBtn.disabled = disabled;
+}
+
+function triggerSpin(): void {
+  if (spinning) return;
+  spinning = true;
+  velocity = INITIAL_SPEED;
+  setButtonsDisabled(true);
+}
+
+hubBtn.addEventListener("click", triggerSpin);
+spinBtn.addEventListener("click", triggerSpin);
+
+// --- Drawing -----------------------------------------------------------------
 
 function drawWheel(angleOffset: number): void {
   const size = canvas.width;
@@ -99,20 +130,22 @@ function drawWheel(angleOffset: number): void {
   ctx.strokeStyle = "rgba(255,255,255,0.2)";
   ctx.lineWidth = 4;
   ctx.stroke();
-
-  // --- Center dot ---
-  ctx.beginPath();
-  ctx.arc(cx, cy, size * 0.025, 0, 2 * Math.PI);
-  ctx.fillStyle = "#fff";
-  ctx.fill();
 }
 
 // --- Animation loop ----------------------------------------------------------
 
-const SPEED_RAD = (SPIN_SPEED * Math.PI) / 180;
-
 function tick(): void {
-  rotation = (rotation + SPEED_RAD) % (2 * Math.PI);
+  if (spinning) {
+    velocity *= FRICTION;
+    rotation = (rotation + velocity) % (2 * Math.PI);
+
+    if (velocity < STOP_THRESHOLD) {
+      velocity = 0;
+      spinning = false;
+      setButtonsDisabled(false);
+    }
+  }
+
   drawWheel(rotation);
   requestAnimationFrame(tick);
 }

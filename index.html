@@ -13,7 +13,13 @@
     <title>spinny-wheely-thing</title>
   </head>
   <body>
-    <canvas id="wheel"></canvas>
+    <div id="app">
+      <div id="wheel-wrap">
+        <canvas id="wheel"></canvas>
+        <button id="hub-btn" aria-label="Spin the wheel"></button>
+      </div>
+      <button id="spin-btn">Spin</button>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
