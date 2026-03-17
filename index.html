@@ -19,9 +19,24 @@
         <button id="hub-btn" aria-label="Spin the wheel"></button>
         <div id="pointer"></div>
       </div>
-      <button id="spin-btn">Spin</button>
+      <div id="btn-row">
+        <button id="edit-btn">Edit</button>
+        <button id="spin-btn">Spin</button>
+      </div>
       <p id="winner"></p>
     </div>
+
+    <dialog id="edit-dialog">
+      <form id="edit-form" method="dialog">
+        <h2>Edit options</h2>
+        <textarea id="options-input" rows="10" spellcheck="false"></textarea>
+        <p id="edit-error" aria-live="polite"></p>
+        <div id="dialog-actions">
+          <button type="button" id="cancel-btn">Cancel</button>
+          <button type="button" id="save-btn">Save</button>
+        </div>
+      </form>
+    </dialog>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

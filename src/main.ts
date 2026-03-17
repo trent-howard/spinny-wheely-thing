@@ -2,15 +2,11 @@ import "./style.css";
 
 // --- Configuration -----------------------------------------------------------
 
-const items: string[] = [
-  "Alice",
-  "Bob",
-  "Charlie",
-  "Dave",
-  "Eve",
-  "Frank",
-  "Grace",
-];
+const params = new URLSearchParams(window.location.search);
+let items: string[] =
+  params.getAll("option").length > 0
+    ? params.getAll("option")
+    : ["Aiko", "Björn", "Chioma", "Diego", "Elif", "Femi", "Guadalupe"];
 
 const COLORS = [
   "#e63946",
@@ -37,7 +33,14 @@ const canvas = document.querySelector<HTMLCanvasElement>("#wheel")!;
 const ctx = canvas.getContext("2d")!;
 const hubBtn = document.querySelector<HTMLButtonElement>("#hub-btn")!;
 const spinBtn = document.querySelector<HTMLButtonElement>("#spin-btn")!;
+const editBtn = document.querySelector<HTMLButtonElement>("#edit-btn")!;
 const winnerEl = document.querySelector<HTMLParagraphElement>("#winner")!;
+const editDialog = document.querySelector<HTMLDialogElement>("#edit-dialog")!;
+const optionsInput =
+  document.querySelector<HTMLTextAreaElement>("#options-input")!;
+const editError = document.querySelector<HTMLParagraphElement>("#edit-error")!;
+const saveBtn = document.querySelector<HTMLButtonElement>("#save-btn")!;
+const cancelBtn = document.querySelector<HTMLButtonElement>("#cancel-btn")!;
 
 function resizeCanvas(): void {
   const size = Math.min(window.innerWidth, window.innerHeight) * 0.85;
@@ -64,6 +67,7 @@ let spinning = false;
 function setButtonsDisabled(disabled: boolean): void {
   hubBtn.disabled = disabled;
   spinBtn.disabled = disabled;
+  editBtn.disabled = disabled;
 }
 
 function getWinner(): string {
@@ -86,6 +90,52 @@ function triggerSpin(): void {
 
 hubBtn.addEventListener("click", triggerSpin);
 spinBtn.addEventListener("click", triggerSpin);
+
+// --- Edit dialog -------------------------------------------------------------
+
+function parseOptions(raw: string): string[] {
+  return raw
+    .split(/[\n,]/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+}
+
+function syncParams(newItems: string[], dialogOpen: boolean): void {
+  const p = new URLSearchParams();
+  newItems.forEach((item) => p.append("option", item));
+  if (dialogOpen) p.set("edit", "true");
+  history.replaceState(null, "", `?${p.toString()}`);
+}
+
+editBtn.addEventListener("click", () => {
+  optionsInput.value = items.join("\n");
+  editError.textContent = "";
+  editDialog.showModal();
+  syncParams(items, true);
+});
+
+saveBtn.addEventListener("click", () => {
+  const parsed = parseOptions(optionsInput.value);
+  if (parsed.length === 0) {
+    editError.textContent = "Add at least one option.";
+    return;
+  }
+  items = parsed;
+  syncParams(items, false);
+  editDialog.close();
+});
+
+cancelBtn.addEventListener("click", () => {
+  syncParams(items, false);
+  editDialog.close();
+});
+
+// Open dialog on load if the param is present.
+if (new URLSearchParams(window.location.search).has("edit")) {
+  optionsInput.value = items.join("\n");
+  editError.textContent = "";
+  editDialog.showModal();
+}
 
 // --- Drawing -----------------------------------------------------------------
 
