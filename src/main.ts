@@ -37,6 +37,7 @@ const canvas = document.querySelector<HTMLCanvasElement>("#wheel")!;
 const ctx = canvas.getContext("2d")!;
 const hubBtn = document.querySelector<HTMLButtonElement>("#hub-btn")!;
 const spinBtn = document.querySelector<HTMLButtonElement>("#spin-btn")!;
+const winnerEl = document.querySelector<HTMLParagraphElement>("#winner")!;
 
 function resizeCanvas(): void {
   const size = Math.min(window.innerWidth, window.innerHeight) * 0.85;
@@ -65,10 +66,21 @@ function setButtonsDisabled(disabled: boolean): void {
   spinBtn.disabled = disabled;
 }
 
+function getWinner(): string {
+  const sliceAngle = (2 * Math.PI) / items.length;
+  // The pointer sits at angle 0 (3 o'clock). Work out which wedge occupies
+  // that angle by inverting the rotation offset.
+  const normalized =
+    (((0 - rotation) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+  const index = Math.floor(normalized / sliceAngle) % items.length;
+  return items[index];
+}
+
 function triggerSpin(): void {
   if (spinning) return;
   spinning = true;
   velocity = INITIAL_SPEED;
+  winnerEl.textContent = "";
   setButtonsDisabled(true);
 }
 
@@ -143,6 +155,7 @@ function tick(): void {
       velocity = 0;
       spinning = false;
       setButtonsDisabled(false);
+      winnerEl.textContent = `The winner is... ${getWinner()} 🎉`;
     }
   }
 

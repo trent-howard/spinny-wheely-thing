@@ -87,3 +87,23 @@ canvas {
     opacity: 0.5;
   }
 }
+
+#pointer {
+  position: absolute;
+  right: 0;
+  transform: translateX(50%);
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-right: 22px solid #fff;
+  filter: drop-shadow(-2px 0 4px rgba(0, 0, 0, 0.4));
+}
+
+#winner {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  min-height: 1.5em;
+  text-align: center;
+}
