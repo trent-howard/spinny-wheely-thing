@@ -60,7 +60,7 @@ new ResizeObserver(resizeCanvas).observe(document.body);
 
 // --- Spin state --------------------------------------------------------------
 
-let rotation = 0;
+let rotation = Math.random() * 2 * Math.PI;
 let velocity = 0; // radians per frame
 let spinning = false;
 
