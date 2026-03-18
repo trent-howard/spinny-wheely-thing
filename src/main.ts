@@ -100,18 +100,30 @@ function parseOptions(raw: string): string[] {
     .filter((s) => s.length > 0);
 }
 
-function syncParams(newItems: string[], dialogOpen: boolean): void {
-  const p = new URLSearchParams();
+function setEditParam(open: boolean): void {
+  const p = new URLSearchParams(window.location.search);
+  if (open) {
+    p.set("edit", "true");
+  } else {
+    p.delete("edit");
+  }
+  const qs = p.toString();
+  history.replaceState(null, "", qs ? `?${qs}` : location.pathname);
+}
+
+function saveOptionsToParams(newItems: string[]): void {
+  const p = new URLSearchParams(window.location.search);
+  p.delete("option");
   newItems.forEach((item) => p.append("option", item));
-  if (dialogOpen) p.set("edit", "true");
-  history.replaceState(null, "", `?${p.toString()}`);
+  const qs = p.toString();
+  history.replaceState(null, "", qs ? `?${qs}` : location.pathname);
 }
 
 editBtn.addEventListener("click", () => {
   optionsInput.value = items.join("\n");
   editError.textContent = "";
   editDialog.showModal();
-  syncParams(items, true);
+  setEditParam(true);
 });
 
 saveBtn.addEventListener("click", () => {
@@ -121,12 +133,13 @@ saveBtn.addEventListener("click", () => {
     return;
   }
   items = parsed;
-  syncParams(items, false);
+  saveOptionsToParams(items);
+  setEditParam(false);
   editDialog.close();
 });
 
 cancelBtn.addEventListener("click", () => {
-  syncParams(items, false);
+  setEditParam(false);
   editDialog.close();
 });
 

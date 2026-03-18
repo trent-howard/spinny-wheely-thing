@@ -114,7 +114,13 @@ canvas {
   h2 {
     font-size: 18px;
     font-weight: 700;
-    margin-bottom: 16px;
+    margin-bottom: 6px;
+  }
+
+  #edit-help {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 12px;
   }
 
   @media (max-width: 480px) {
