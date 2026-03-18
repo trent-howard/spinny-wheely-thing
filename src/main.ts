@@ -2,10 +2,12 @@ import "./style.css";
 
 // --- Configuration -----------------------------------------------------------
 
+const MAX_OPTIONS = 30;
+
 const params = new URLSearchParams(window.location.search);
 let items: string[] =
   params.getAll("option").length > 0
-    ? params.getAll("option")
+    ? params.getAll("option").slice(0, MAX_OPTIONS)
     : ["Aiko", "Björn", "Chioma", "Diego", "Elif", "Femi", "Guadalupe"];
 
 const COLORS = [
@@ -130,6 +132,10 @@ saveBtn.addEventListener("click", () => {
   const parsed = parseOptions(optionsInput.value);
   if (parsed.length === 0) {
     editError.textContent = "Add at least one option.";
+    return;
+  }
+  if (parsed.length > MAX_OPTIONS) {
+    editError.textContent = `Too many options — max is ${MAX_OPTIONS}.`;
     return;
   }
   items = parsed;
