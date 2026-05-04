@@ -1,3 +1,10 @@
+/* Catppuccin Mocha palette
+   Base    #1e1e2e   Mantle  #181825   Crust   #11111b
+   Surface0 #313244  Surface1 #45475a  Surface2 #585b70
+   Text    #cdd6f4   Subtext1 #bac2de  Subtext0 #a6adc8
+   Mauve   #cba6f7   Lavender #b4befe  Pink    #f5c2e7   Red #f38ba8
+*/
+
 *,
 *::before,
 *::after {
@@ -7,7 +14,8 @@
 }
 
 body {
-  background: #1a1a2e;
+  background: #1e1e2e;
+  color: #cdd6f4;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,8 +45,8 @@ canvas {
 #hub-btn {
   position: absolute;
   border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.4);
-  background: #fff;
+  border: 3px solid rgba(205, 214, 244, 0.4);
+  background: #cdd6f4;
   cursor: pointer;
   transition:
     background 0.2s,
@@ -46,8 +54,8 @@ canvas {
     transform 0.1s;
 
   &:hover {
-    background: #f0e6ff;
-    border-color: rgba(255, 255, 255, 0.8);
+    background: #cba6f7;
+    border-color: rgba(203, 166, 247, 0.8);
   }
 
   &:active {
@@ -71,9 +79,9 @@ canvas {
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: #fff;
+  color: #cdd6f4;
   background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  border: 2px solid rgba(205, 214, 244, 0.4);
   border-radius: 999px;
   cursor: pointer;
   transition:
@@ -82,8 +90,8 @@ canvas {
     transform 0.1s;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.7);
+    background: rgba(203, 166, 247, 0.12);
+    border-color: #cba6f7;
   }
 
   &:active {
@@ -97,17 +105,17 @@ canvas {
 }
 
 #edit-dialog {
-  background: #16213e;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #181825;
+  color: #cdd6f4;
+  border: 1px solid #313244;
   border-radius: 16px;
   padding: 28px;
   width: min(480px, 100vw);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 8px 40px rgba(17, 17, 27, 0.7);
   margin: auto;
 
   &::backdrop {
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(17, 17, 27, 0.65);
     backdrop-filter: blur(2px);
   }
 
@@ -119,7 +127,7 @@ canvas {
 
   #edit-help {
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.5);
+    color: #a6adc8;
     margin-bottom: 12px;
   }
 
@@ -136,9 +144,9 @@ canvas {
 
 #options-input {
   width: 100%;
-  background: rgba(255, 255, 255, 0.07);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #1e1e2e;
+  color: #cdd6f4;
+  border: 1px solid #45475a;
   border-radius: 8px;
   padding: 10px 12px;
   font-family: ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
@@ -149,7 +157,7 @@ canvas {
   transition: border-color 0.2s;
 
   &:focus {
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: #cba6f7;
   }
 }
 
@@ -157,7 +165,7 @@ canvas {
   min-height: 1.4em;
   margin-top: 8px;
   font-size: 13px;
-  color: #ef476f;
+  color: #f38ba8;
 }
 
 #dialog-actions {
@@ -184,23 +192,24 @@ canvas {
 }
 
 #cancel-btn {
-  color: #fff;
+  color: #cdd6f4;
   background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid #45475a;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #313244;
+    border-color: #585b70;
   }
 }
 
 #save-btn {
-  color: #1a1a2e;
-  background: #fff;
-  border: 2px solid #fff;
+  color: #11111b;
+  background: #cba6f7;
+  border: 2px solid #cba6f7;
 
   &:hover {
-    background: #f0e6ff;
-    border-color: #f0e6ff;
+    background: #b4befe;
+    border-color: #b4befe;
   }
 }
 
@@ -210,8 +219,8 @@ canvas {
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: #1a1a2e;
-  background: #fff;
+  color: #11111b;
+  background: #cba6f7;
   border: none;
   border-radius: 999px;
   cursor: pointer;
@@ -220,7 +229,7 @@ canvas {
     transform 0.1s;
 
   &:hover {
-    background: #f0e6ff;
+    background: #b4befe;
   }
 
   &:active {
@@ -241,14 +250,14 @@ canvas {
   height: 0;
   border-top: 12px solid transparent;
   border-bottom: 12px solid transparent;
-  border-right: 22px solid #fff;
-  filter: drop-shadow(-2px 0 4px rgba(0, 0, 0, 0.4));
+  border-right: 22px solid #cdd6f4;
+  filter: drop-shadow(-2px 0 4px rgba(17, 17, 27, 0.5));
 }
 
 #winner {
   font-size: 24px;
   font-weight: 700;
-  color: #fff;
+  color: #cdd6f4;
   min-height: 1.5em;
   text-align: center;
   padding-inline: 24px;

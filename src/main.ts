@@ -13,17 +13,19 @@ const DEFAULT_OPTIONS = [
   "Guadalupe",
 ];
 
+// Catppuccin Mocha accent palette, ordered to maximise hue contrast
+// between adjacent wedges (warm/cool interleaved).
 const COLORS = [
-  "#e63946",
-  "#f4a261",
-  "#2a9d8f",
-  "#457b9d",
-  "#a8dadc",
-  "#e9c46a",
-  "#8ecae6",
-  "#c77dff",
-  "#06d6a0",
-  "#ef476f",
+  "#f38ba8", // red
+  "#94e2d5", // teal
+  "#f9e2af", // yellow
+  "#89b4fa", // blue
+  "#eba0ac", // maroon
+  "#a6e3a1", // green
+  "#f5c2e7", // pink
+  "#89dceb", // sky
+  "#fab387", // peach
+  "#cba6f7", // mauve
 ];
 
 // Initial speed in radians/frame and the friction factor applied each frame.
@@ -208,10 +210,10 @@ function drawWheel(angleOffset: number): void {
     ctx.translate(lx, ly);
     ctx.rotate(labelAngle);
 
-    ctx.fillStyle = "rgba(0,0,0,0.75)";
     ctx.font = `bold ${Math.max(11, Math.round(size / 28))}px Inter, system-ui, sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
+    ctx.fillStyle = "#11111b"; // Catppuccin Mocha "Crust"
     ctx.fillText(items[i], 0, 0);
 
     ctx.restore();
