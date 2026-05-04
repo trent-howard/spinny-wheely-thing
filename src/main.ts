@@ -171,7 +171,10 @@ function drawWheel(angleOffset: number): void {
   for (let i = 0; i < items.length; i++) {
     const startAngle = angleOffset + i * sliceAngle;
     const endAngle = startAngle + sliceAngle;
-    const color = COLORS[i % COLORS.length];
+
+    const modifier =
+      Math.floor(i / COLORS.length) * Math.round(COLORS.length / 2);
+    const color = COLORS[(i + modifier) % COLORS.length];
 
     // --- Wedge fill ---
     ctx.beginPath();
