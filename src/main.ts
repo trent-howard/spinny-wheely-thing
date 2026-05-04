@@ -3,12 +3,15 @@ import "./style.css";
 // --- Configuration -----------------------------------------------------------
 
 const MAX_OPTIONS = 30;
-
-const params = new URLSearchParams(window.location.search);
-let items: string[] =
-  params.getAll("option").length > 0
-    ? params.getAll("option").slice(0, MAX_OPTIONS)
-    : ["Aiko", "Björn", "Chioma", "Diego", "Elif", "Femi", "Guadalupe"];
+const DEFAULT_OPTIONS = [
+  "Aiko",
+  "Björn",
+  "Chioma",
+  "Diego",
+  "Elif",
+  "Femi",
+  "Guadalupe",
+];
 
 const COLORS = [
   "#e63946",
@@ -28,6 +31,12 @@ const INITIAL_SPEED = 0.35;
 const FRICTION = 0.987;
 // Speed below which we consider the wheel stopped.
 const STOP_THRESHOLD = 0.0005;
+
+const params = new URLSearchParams(window.location.search);
+let items: string[] =
+  params.getAll("option").length > 0
+    ? params.getAll("option").slice(0, MAX_OPTIONS)
+    : DEFAULT_OPTIONS;
 
 // --- Canvas & button setup ---------------------------------------------------
 
