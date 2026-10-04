@@ -16,15 +16,32 @@
     <div id="app">
       <div id="wheel-wrap">
         <canvas id="wheel"></canvas>
-        <button id="hub-btn" aria-label="Spin the wheel"></button>
-        <div id="pointer"></div>
+        <button id="hub-btn" aria-label="Spin the wheel">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <path
+              d="M 90.20 32.10 A 44 44 0 1 0 90.20 67.90 L 116.00 50 Z"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span>SPIN</span>
+        </button>
       </div>
       <div id="btn-row">
         <button id="edit-btn">Edit</button>
         <button id="spin-btn">Spin</button>
       </div>
-      <p id="winner"></p>
+      <div id="winner">
+        <button id="winner-close" aria-label="Close">&times;</button>
+        <p id="winner-label">Winner!</p>
+        <p id="winner-name"></p>
+        <div id="winner-actions">
+          <button id="copy-btn" type="button">Copy image</button>
+          <p id="copy-status" aria-live="polite"></p>
+        </div>
+      </div>
     </div>
+
+    <canvas id="confetti-canvas" aria-hidden="true"></canvas>
 
     <dialog id="edit-dialog">
       <form id="edit-form" method="dialog">
